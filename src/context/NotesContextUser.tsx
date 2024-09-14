@@ -1,18 +1,16 @@
-import { createContext} from 'react';
-import { useState, useEffect } from 'react';
-import Spinner from '../assets/icons/Spinner';
-import { db } from '../configs/appwrite/databases';
-
+import React, { useState, useEffect, createContext } from "react";
+import Spinner from "../assets/icons/Spinner";
+import { db } from "../configs/appwrite/databases";
+import { contextDataProps } from "./type";
+import { toast } from "react-toastify";
 type ContextProviderProps = {
   children?: React.ReactNode;
 };
-type contextDataProps = {
-  notes: undefined;
-};
-export const NotesContextUser = createContext<contextDataProps | null>(null);
+
+export const NotesContextUser = createContext({} as contextDataProps);
 
 const NotesProvider = ({ children }: ContextProviderProps) => {
-  const [selectedNote, setSelectedNote] = useState(null);
+  const [selectedNote, setSelectedNote] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [notes, setNotes] = useState();
 
@@ -21,7 +19,15 @@ const NotesProvider = ({ children }: ContextProviderProps) => {
   }, []);
   const init = async () => {
     const response = await db.notes.list();
-    setNotes(response.document);
+    setNotes(response.documents);
+    // console.log("oo", response);
+    if (response.total === 0) {
+      setLoading(false);
+      const notify = () => toast.warning("There is no Sticky Note 😕",{
+        position: "top-center",
+      });
+      notify();
+    }
     setLoading(false);
   };
   const contextData = {
@@ -36,13 +42,15 @@ const NotesProvider = ({ children }: ContextProviderProps) => {
       {loading ? (
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '100vh',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100vh",
+            margin:"auto",
+            backgroundColor: "#9bd1de"
           }}
         >
-          <Spinner size="100" />
+          <Spinner size="50" />
         </div>
       ) : (
         children

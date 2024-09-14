@@ -22,5 +22,24 @@
         "colorHeader":"#FED0FD",
         "colorBody":"#FEE5FD",
         "colorText":"#18181A"
+    },
+    {
+        "id":"color-gray",
+        "colorHeader":"#CFD8DC",
+        "colorBody":"#ECEFF1",
+        "colorText":"#18181A"
+    },
+    {
+        "id":"color-cyan",
+        "colorHeader":"#80DEEA",
+        "colorBody":"#B2EBF2",
+        "colorText":"#18181A"
+    },
+    {
+        "id":"color-amber",
+        "colorHeader":"#FFB74D",
+        "colorBody":"#FFCC80",
+        "colorText":"#18181A"
     }
+
 ]
